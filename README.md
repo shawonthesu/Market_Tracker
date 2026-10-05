@@ -110,7 +110,6 @@ Market_Tracker/
 ├── index.html             # Web app (HTML, CSS, JavaScript, Supabase)
 ├── market_tracker.py      # Python desktop app (Tkinter)
 ├── assets/
-│   └── qr-code.png        # QR code for the live app
 └── README.md
 ```
 
