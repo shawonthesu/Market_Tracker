@@ -65,13 +65,6 @@
 5. **Total = subtotal − bill discount**
 
 ## How it works
-
-```mermaid
-flowchart LR
-  A["Browser or phone<br/>index.html on GitHub Pages"] -- "login and queries" --> B[("Supabase<br/>Auth + Postgres")]
-  B -- "Row Level Security:<br/>only your own rows" --> A
-```
-
 The web app is a single static file with no build step. It talks to Supabase directly from the browser. Access control is done in the database with Row Level Security, so a logged-in user can only read and change their own rows.
 
 ## Tech stack
@@ -109,7 +102,6 @@ fc-cache -f
 Market_Tracker/
 ├── index.html             # Web app (HTML, CSS, JavaScript, Supabase)
 ├── market_tracker.py      # Python desktop app (Tkinter)
-├── assets/
 └── README.md
 ```
 
