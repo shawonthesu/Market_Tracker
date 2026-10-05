@@ -84,60 +84,6 @@ The web app is a single static file with no build step. It talks to Supabase dir
 | Desktop app | Python 3 with Tkinter, standard library only |
 | Look | Crumpled paper background, dark brown text, [Doto](https://fonts.google.com/specimen/Doto) font |
 
-## Run your own copy
-
-1. **Create a Supabase project** at [supabase.com](https://supabase.com).
-2. **Create the tables.** Open the SQL Editor and run:
-
-<details>
-<summary>Show the SQL</summary>
-
-```sql
-create table public.items (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null default auth.uid() references auth.users(id) on delete cascade,
-  name text not null,
-  details text not null default '',
-  qty numeric not null check (qty > 0),
-  unit text not null default 'pcs',
-  price numeric not null check (price >= 0),
-  discount_type text not null default 'pct' check (discount_type in ('pct','fix')),
-  discount_value numeric not null default 0 check (discount_value >= 0),
-  bought boolean not null default false,
-  created_at timestamptz not null default now()
-);
-
-create table public.bill_settings (
-  user_id uuid primary key default auth.uid() references auth.users(id) on delete cascade,
-  discount_type text not null default 'pct' check (discount_type in ('pct','fix')),
-  discount_value numeric not null default 0 check (discount_value >= 0)
-);
-
-alter table public.items enable row level security;
-alter table public.bill_settings enable row level security;
-
-create policy "own items" on public.items for all to authenticated
-  using (user_id = (select auth.uid())) with check (user_id = (select auth.uid()));
-create policy "own bill settings" on public.bill_settings for all to authenticated
-  using (user_id = (select auth.uid())) with check (user_id = (select auth.uid()));
-
-grant select, insert, update, delete on public.items to authenticated;
-grant select, insert, update, delete on public.bill_settings to authenticated;
-```
-
-</details>
-
-3. **Set up login.** In Supabase, enable the Email provider, then set **Authentication → URL Configuration → Site URL** to the address where you host the page.
-4. **Add your keys.** In `index.html`, replace the two constants at the top of the script with your **Project URL** and **publishable key** (Supabase → Settings → API Keys):
-
-   ```js
-   const SB_URL = 'https://YOUR-PROJECT.supabase.co';
-   const SB_KEY = 'sb_publishable_...';
-   ```
-
-5. **Host it.** Push the repo to GitHub and turn on **Settings → Pages** (deploy from `main`, root folder).
-
-> **Keys:** only the publishable key belongs in the page. Never put the secret key or the `service_role` key in this repo.
 
 ## Python desktop app
 
