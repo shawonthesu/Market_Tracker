@@ -110,6 +110,6 @@ Market_Tracker/
 - [x] Web app with discounts and totals
 - [x] Mobile layout
 - [x] Accounts and cloud sync with Supabase
-- [ ] Sync the Python desktop app with the same database
+- [x] Sync the Python desktop app with the same database
 - [ ] Work offline and sync when the connection returns
 - [ ] Categories, search and export
